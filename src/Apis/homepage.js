@@ -8,17 +8,13 @@ export const homePage = atom({
 });
 
 export const AllImages = selector({
-  key: "fetchPokemonListSelector",
+  key: "AllImages",
   get: async ({ get }) => {
     try {
       const url = get(homePage); // Moved url declaration here
 
-      console.log("url", url);
-
       const response = await axios.get(url); // Use axios for API call
-      const results = response.data; // Assuming data structure matches your needs
-
-      console.log("Api Results", results);
+      const results = response.data;
 
       return results;
     } catch (error) {
