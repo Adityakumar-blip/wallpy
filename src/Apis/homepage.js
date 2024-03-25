@@ -8,12 +8,12 @@ export const homePage = atom({
 });
 
 export const AllImages = selector({
-  key: "AllImages",
+  key: "imagesData",
   get: async ({ get }) => {
     try {
-      const url = get(homePage); // Moved url declaration here
+      const url = get(homePage);
 
-      const response = await axios.get(url); // Use axios for API call
+      const response = await axios.get(url);
       const results = response.data;
 
       return results;

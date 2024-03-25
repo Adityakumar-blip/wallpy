@@ -3,6 +3,8 @@ import { ReactNode } from "react";
 import { useRouter } from "next/router";
 import Navbar from "@/components/Navbar";
 import BottomNav from "@/components/BottomNav";
+import ApplyButton from "@/components/ApplyButton";
+import LogoutButton from "@/components/Logout";
 
 const MainLayout = ({ children }) => {
   const router = useRouter();
@@ -28,7 +30,13 @@ const MainLayout = ({ children }) => {
           >
             {children}
           </div>
-          <BottomNav />
+          {routerName.includes("/image-detail") ? (
+            <ApplyButton />
+          ) : routerName === "/profile" ? (
+            <LogoutButton />
+          ) : (
+            <BottomNav />
+          )}
         </div>
       </div>
     </>

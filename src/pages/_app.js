@@ -5,7 +5,7 @@ import { RecoilRoot } from "recoil";
 export default function App({ Component, pageProps, router }) {
   return (
     <RecoilRoot>
-      <RootLayout>
+      <RootLayout router={router}>
         <Component {...pageProps} />
       </RootLayout>
     </RecoilRoot>

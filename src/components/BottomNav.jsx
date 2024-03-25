@@ -38,7 +38,7 @@ const BottomNav = () => {
             class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
             onClick={() => router.push("/funds")}
           >
-            <svg
+            {/* <svg
               class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
@@ -47,15 +47,25 @@ const BottomNav = () => {
             >
               <path d="M11.074 4 8.442.408A.95.95 0 0 0 7.014.254L2.926 4h8.148ZM9 13v-1a4 4 0 0 1 4-4h6V6a1 1 0 0 0-1-1H1a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h17a1 1 0 0 0 1-1v-2h-6a4 4 0 0 1-4-4Z" />
               <path d="M19 10h-6a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1Zm-4.5 3.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2ZM12.62 4h2.78L12.539.41a1.086 1.086 0 1 0-1.7 1.352L12.62 4Z" />
+            </svg> */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="#9CA3AF"
+              className="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600"
+            >
+              <path d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z" />
             </svg>
-            <span class="sr-only">Wallet</span>
+            <span class="sr-only">For You</span>
           </button>
           <div
             id="tooltip-wallet"
             role="tooltip"
             class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
           >
-            Wallet
+            For You
             <div class="tooltip-arrow" data-popper-arrow></div>
           </div>
           <div class="flex items-center justify-center">
@@ -94,6 +104,7 @@ const BottomNav = () => {
             data-tooltip-target="tooltip-settings"
             type="button"
             class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+            onClick={() => router.push("/prefferences")}
           >
             <svg
               class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
@@ -124,6 +135,7 @@ const BottomNav = () => {
             data-tooltip-target="tooltip-profile"
             type="button"
             class="inline-flex flex-col items-center justify-center px-5 rounded-e-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
+            onClick={() => router.push("/profile")}
           >
             <svg
               class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
