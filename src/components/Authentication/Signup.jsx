@@ -6,8 +6,10 @@ import {
 } from "firebase/auth";
 import app from "@/utils/firebase";
 import { useRouter } from "next/router";
+import { useFormik } from "formik";
+import { createUser } from "@/Apis/firebse-apis";
 
-const Login = () => {
+const Signup = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const auth = getAuth(app);
@@ -21,30 +23,30 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          localStorage.setItem("token", user?.accessToken);
-          localStorage.setItem("userId", user?.uid);
-          router.push("/homepage");
-          console.log("User logged in:", user);
-          // Do something after successful login, e.g. navigate to a homepage
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log("Error logging in:", errorCode, errorMessage);
-          // Do something after failed login, e.g. show an error message
-        });
-    } catch (error) {
-      // setError(error.message);
-      console.log("Error in login", error);
-    }
+  const signup = (values) => {
+    createUserWithEmailAndPassword(auth, values?.email, values?.password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log("User signed up:", user);
+        localStorage.setItem("token", user?.accessToken);
+        localStorage.setItem("userId", user?.uid);
+        createUser({ ...values, id: user?.uid });
+        router.push("/homepage");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log("Error signing up:", errorCode, errorMessage);
+      });
   };
+
+  const formik = useFormik({
+    initialValues: { userName: "", email: "", password: "" },
+    onSubmit: (values) => {
+      console.log("values", values);
+      signup(values);
+    },
+  });
 
   return (
     <div className=" bg-black-100 flex flex-col justify-center items-center h-screen w-full ">
@@ -60,7 +62,22 @@ const Login = () => {
       </div>
 
       <div className="mt-12 w-full px-4 sm:mx-auto sm:w-full sm:max-w-md m-4">
-        <form className="space-y-6" onSubmit={handleSubmit}>
+        <form className="space-y-6" onSubmit={formik.handleSubmit}>
+          <div>
+            <div className="mt-1">
+              <input
+                id="userName"
+                name="userName"
+                type="text"
+                placeholder="Enter your username"
+                required
+                value={formik.values.userName}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className="appearance-none h-[3rem] block w-full px-3 py-2 text-black border rounded-md shadow-sm placeholder-black-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div>
           <div>
             <div className="mt-1">
               <input
@@ -70,8 +87,9 @@ const Login = () => {
                 placeholder="Enter your email"
                 autoComplete="email"
                 required
-                value={email}
-                onChange={handleEmailChange}
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 className="appearance-none h-[3rem] block w-full px-3 py-2 text-black border rounded-md shadow-sm placeholder-black-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
@@ -86,13 +104,11 @@ const Login = () => {
                 placeholder="Password"
                 autoComplete="current-password"
                 required
-                value={password}
-                onChange={handlePasswordChange}
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 className="appearance-none h-[3rem] text-black block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
-            </div>
-            <div className="text-right">
-              <p>Forgot Password?</p>
             </div>
           </div>
 
@@ -101,19 +117,19 @@ const Login = () => {
               type="submit"
               className="w-full mt-[5rem] flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Log in
+              Signup
             </button>
           </div>
         </form>
         <div
           className="mt-4 text-center"
-          onClick={() => router.push("/auth/signup")}
+          onClick={() => router.push("/auth/login")}
         >
-          <p>Not registered? Create a free account</p>
+          <p>Already registered?Login</p>
         </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Signup;
