@@ -14,7 +14,7 @@ const HomePage = () => {
     const fetchDataFromAPI = async () => {
       try {
         const response = await axios.get(
-          "https://api.unsplash.com/photos/?client_id=HsYF8p3ImJCStWz7AQwZiixIzGUqmhJhsABYXn5JSdQ"
+          "https://api.unsplash.com/photos/?page=1&per_page=20&client_id=HsYF8p3ImJCStWz7AQwZiixIzGUqmhJhsABYXn5JSdQ"
         );
         setImages(response.data);
       } catch (error) {

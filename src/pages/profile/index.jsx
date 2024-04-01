@@ -1,14 +1,33 @@
+import { getUserById } from "@/Apis/firebse-apis";
+import app from "@/utils/firebase";
+import { getAuth } from "firebase/auth";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 
 const index = () => {
   const router = useRouter();
+  const auth = getAuth(app);
+  const user = auth.currentUser;
+
+  const [loggedUser, setLoggedUser] = useState({});
+
+  console.log("User", user);
 
   const handleBack = () => {
     router.back();
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const userData = await getUserById(user?.uid);
+      console.log("Logged in user", userData);
+      setLoggedUser(userData);
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="p-4">
       <div className="flex flex-row items-center justify-between">
@@ -28,9 +47,9 @@ const index = () => {
           />
         </div>
         <div className="flex flex-col text-black">
-          <p className="text-2xl font-bold">Aditya Kumar</p>
+          <p className="text-2xl font-bold">{loggedUser?.userName}</p>
           <p className="text-xl text-gray-500 font-semibold">
-            aditya@gmail.com
+            {loggedUser?.email}
           </p>
           <p className="text-lg font-semibold mt-2 underline underline-offset-1">
             Edit Profile

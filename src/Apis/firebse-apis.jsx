@@ -1,25 +1,42 @@
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+  doc,
+  Firestore,
+  setDoc,
+} from "firebase/firestore";
 import { getAuth, signOut } from "firebase/auth";
 import app from "@/utils/firebase";
 
 const auth = getAuth(app);
+const db = getFirestore();
 
-// function to create user
+// Function to create user
 const createUser = async (user) => {
   if (!user) return;
   console.log("users", user);
-  const db = getFirestore();
-  const userRef = collection(db, "users");
-  const snapshot = await addDoc(userRef, {
-    userName: user.userName ? user?.userName : "",
-    email: user.email,
-    photoURL: "",
-    createdAt: new Date(),
-    id: user.id,
-  });
-  console.log("User document created with ID:", snapshot.id);
+
+  try {
+    const userRef = collection(db, "users");
+    const snapshot = await addDoc(userRef, {
+      userName: user.userName ? user?.userName : "",
+      email: user.email,
+      photoURL: "",
+      createdAt: new Date(),
+      id: user.id,
+    });
+    console.log("User document created with ID:", snapshot.id);
+  } catch (error) {
+    console.error("Error creating user:", error);
+  }
 };
 
+// Function to logout user
 const logout = () => {
   signOut(auth)
     .then(() => {
@@ -27,10 +44,46 @@ const logout = () => {
       localStorage.removeItem("token");
     })
     .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log("Error signing out:", errorCode, errorMessage);
+      console.error("Error signing out:", error);
     });
 };
 
-export { createUser, logout };
+// Function to get user by ID
+const getUserById = async (userId) => {
+  console.log("user id", userId);
+  try {
+    const q = query(collection(db, "users"), where("id", "==", userId));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      const doc = querySnapshot.docs[0];
+      console.log("user data fetched", doc.data());
+      return doc.data();
+    } else {
+      console.log("No such user!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    return "test";
+  }
+};
+
+// function to add collects
+const addCollects = async (userId, imageUrl) => {
+  try {
+    const collectsRef = doc(db, "collects", userId);
+    await setDoc(
+      collectsRef,
+      {
+        images: imageUrl,
+      },
+      { merge: true }
+    );
+    console.log("Collect added successfully!");
+  } catch (error) {
+    console.error("Error adding collect:", error);
+  }
+};
+
+export { createUser, logout, getUserById };
