@@ -73,17 +73,20 @@ const getUserById = async (userId) => {
 const addCollects = async (userId, imageUrl) => {
   try {
     const collectsRef = doc(db, "collects", userId);
-    await setDoc(
-      collectsRef,
-      {
-        images: imageUrl,
-      },
-      { merge: true }
-    );
+    const collectsSnapshot = await getDoc(collectsRef);
+
+    if (collectsSnapshot.exists()) {
+      const { images } = collectsSnapshot.data();
+      const updatedImages = images ? [...images, imageUrl] : [imageUrl];
+      await setDoc(collectsRef, { images: updatedImages });
+    } else {
+      await setDoc(collectsRef, { images: [imageUrl] });
+    }
+
     console.log("Collect added successfully!");
   } catch (error) {
     console.error("Error adding collect:", error);
   }
 };
 
-export { createUser, logout, getUserById };
+export { createUser, logout, getUserById, addCollects };

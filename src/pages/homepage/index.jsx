@@ -32,16 +32,14 @@ const HomePage = () => {
       <p className="text-xl pl-4 font-bold ">Popular Today</p>
       <div className="flex flex-wrap justify-center">
         {images.map((image, index) => (
-          <div
-            className="flex flex-wrap justify-center"
-            onClick={() =>
-              handleImageClick({ router: router, data: image?.urls?.regular })
-            }
-          >
+          <div className="flex flex-wrap justify-center">
             <ProgressiveImg
               src={image?.urls?.regular}
               placeholderSrc={image?.urls?.thumb}
               key={index}
+              onClick={() =>
+                handleImageClick({ router: router, data: image?.urls?.regular })
+              }
             />
           </div>
         ))}

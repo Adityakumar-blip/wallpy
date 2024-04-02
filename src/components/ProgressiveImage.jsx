@@ -1,7 +1,12 @@
 "use client";
+import { addCollects } from "@/Apis/firebse-apis";
+import app from "@/utils/firebase";
+import { getAuth } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 
 const ProgressiveImg = ({ placeholderSrc, liked, src, ...props }) => {
+  const auth = getAuth(app);
+  const user = auth.currentUser;
   const [imgSrc, setImgSrc] = useState(placeholderSrc || src);
   const [showMenu, setShowMenu] = useState(false);
   const customClass =
@@ -29,6 +34,7 @@ const ProgressiveImg = ({ placeholderSrc, liked, src, ...props }) => {
         {...{ src: imgSrc, ...props }}
         alt={props.alt || ""}
         className={`image ${customClass}`}
+        onClick={props.onClick}
       />
       {showMenu && (
         <div
@@ -54,15 +60,17 @@ const ProgressiveImg = ({ placeholderSrc, liked, src, ...props }) => {
             <path d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z" />
           </svg>
         ) : (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="#9CA3AF"
-          >
-            <path d="M17.867 3.493l4.133 3.444v5.127l-10 8.333-10-8.334v-5.126l4.133-3.444 5.867 3.911 5.867-3.911zm.133-2.493l-6 4-6-4-6 5v7l12 10 12-10v-7l-6-5z" />
-          </svg>
+          <div onClick={() => addCollects(user.uid, src)}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="#9CA3AF"
+            >
+              <path d="M17.867 3.493l4.133 3.444v5.127l-10 8.333-10-8.334v-5.126l4.133-3.444 5.867 3.911 5.867-3.911zm.133-2.493l-6 4-6-4-6 5v7l12 10 12-10v-7l-6-5z" />
+            </svg>
+          </div>
         )}
       </div>
     </div>
