@@ -5,28 +5,33 @@ const Funds = () => {
   const array = [
     {
       id: 0,
-      name: "Cat 1",
-      img: "https://images.unsplash.com/photo-1688025950970-2ffb840b8f64?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMyfENEd3V3WEpBYkV3fHxlbnwwfHx8fHw%3D",
+      name: "Nature",
+      img: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8TmF0dXJlfGVufDB8fDB8fHww",
     },
     {
-      id: 0,
-      name: "Cat 2",
-      img: "https://images.unsplash.com/photo-1611343693811-2c235c683f26?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHVuc3BhbHNofGVufDB8fDB8fHww",
+      id: 1,
+      name: "Space",
+      img: "https://images.unsplash.com/photo-1608178398319-48f814d0750c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHVuaXZlcnNlfGVufDB8fDB8fHww",
     },
     {
-      id: 0,
-      name: "Cat 2",
-      img: "https://images.unsplash.com/photo-1611343693811-2c235c683f26?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHVuc3BhbHNofGVufDB8fDB8fHww",
+      id: 2,
+      name: "Architecture",
+      img: "https://images.unsplash.com/photo-1492321936769-b49830bc1d1e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGFyY2hpdGVjdHVyZXxlbnwwfHwwfHx8MA%3D%3D",
     },
     {
-      id: 0,
-      name: "Cat 2",
-      img: "https://images.unsplash.com/photo-1611343693811-2c235c683f26?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHVuc3BhbHNofGVufDB8fDB8fHww",
+      id: 3,
+      name: "Abstract",
+      img: "https://images.unsplash.com/photo-1563089145-599997674d42?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YWJzdHJhY3R8ZW58MHx8MHx8fDA%3D",
     },
     {
-      id: 0,
-      name: "Cat 2",
-      img: "https://images.unsplash.com/photo-1611343693811-2c235c683f26?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHVuc3BhbHNofGVufDB8fDB8fHww",
+      id: 4,
+      name: "Mountains",
+      img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bW91bnRhaW5zfGVufDB8fDB8fHww",
+    },
+    {
+      id: 5,
+      name: "Ocean",
+      img: "https://images.unsplash.com/photo-1513553404607-988bf2703777?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8b2NlYW58ZW58MHx8MHx8fDA%3D",
     },
   ];
 
