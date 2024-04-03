@@ -29,7 +29,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <p className="text-xl pl-4 font-bold ">Popular Today</p>
+      {/* <p className="text-xl pl-4 font-bold ">Popular Today</p> */}
       <div className="flex flex-wrap justify-center">
         {images.map((image, index) => (
           <div className="flex flex-wrap justify-center">

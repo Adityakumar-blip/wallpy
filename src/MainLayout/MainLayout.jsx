@@ -12,14 +12,16 @@ const MainLayout = ({ children }) => {
   return (
     <>
       <div className="h-screen flex flex-col">
-        <div className="relative top-0 z-50 px-20">
-          <Navbar />
-        </div>
+        {routerName !== "/search" && (
+          <div className="relative top-0 z-50 px-20">
+            <Navbar />
+          </div>
+        )}
 
         <div className="flex-1 overflow-y-auto flex flex-col justify-between gap-y-10">
           <div
             style={
-              routerName === "/"
+              routerName === "/" || routerName === "/search"
                 ? {}
                 : {
                     // paddingLeft: "80px",
@@ -34,6 +36,8 @@ const MainLayout = ({ children }) => {
             <ApplyButton />
           ) : routerName === "/profile" ? (
             <LogoutButton />
+          ) : routerName === "/search" ? (
+            ""
           ) : (
             <BottomNav />
           )}

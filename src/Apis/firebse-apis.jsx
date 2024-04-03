@@ -89,4 +89,22 @@ const addCollects = async (userId, imageUrl) => {
   }
 };
 
-export { createUser, logout, getUserById, addCollects };
+// function to get the collects
+const getCollects = async () => {
+  try {
+    const collectsRef = doc(db, "collects", auth.currentUser.uid);
+    const collectsSnapshot = await getDoc(collectsRef);
+
+    if (collectsSnapshot.exists()) {
+      const { images } = collectsSnapshot.data();
+      console.log("images", images);
+      return images;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.log("Error", error);
+  }
+};
+
+export { createUser, logout, getUserById, addCollects, getCollects };

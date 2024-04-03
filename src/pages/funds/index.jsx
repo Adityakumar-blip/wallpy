@@ -1,7 +1,9 @@
+import { getCollects } from "@/Apis/firebse-apis";
 import CategorySlide from "@/components/CategorySlide";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const Funds = () => {
+  const [liked, setLiked] = useState([]);
   const array = [
     {
       id: 0,
@@ -87,11 +89,20 @@ const Funds = () => {
       img: "https://images.unsplash.com/photo-1610397646052-fbbd1ffcd29a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjN8fGJsYWNrJTIwYW5kJTIwd2hpdGUlMjBjb2xvcnxlbnwwfHwwfHx8MA%3D%3D",
     },
   ];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchCollects = await getCollects();
+      console.log(fetchCollects);
+      setLiked(fetchCollects);
+    };
+    fetchData();
+  }, []);
   return (
     <div className="bg-black h-screen flex flex-col pl-4 pr-4 gap-6">
       <div>
         <p className="text-xl font-bold ">Liked</p>
-        <CategorySlide categories={array} />
+        <CategorySlide categories={liked} />
       </div>
       <div>
         <p className="text-xl font-bold ">By Color</p>
