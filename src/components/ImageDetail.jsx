@@ -6,7 +6,7 @@ const ImageDetail = () => {
 
   const { data } = router.query;
 
-  const imgData = JSON.parse(data ?? "");
+  const imgData = data ? JSON.parse(data) : "";
   return (
     <div className="p-4">
       <img
