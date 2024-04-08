@@ -47,7 +47,7 @@ const index = () => {
         <input
           value={value}
           placeholder="Search"
-          className="w-full h-[3rem] rounded-md pl-4 text-black sticky top-0"
+          className="w-full h-[3rem] rounded-md pl-4 text-black sticky top-0 focus:outline-none"
           onChange={(e) => setValue(e.target.value)}
         />
         <div className="overflow-y-auto max-h-[100vh]">

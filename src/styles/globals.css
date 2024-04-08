@@ -39,6 +39,8 @@ body {
 }
 
 .loading {
+  width: inherit; /* Inherit width from parent */
+  height: inherit;
   filter: blur(10px);
   clip-path: inset(0);
 }
@@ -96,3 +98,13 @@ body {
     transform: rotate(-360deg);
   }
 } 
+
+/* .image-viewer {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 2px;
+  border-radius: ;
+} */
+
+
+

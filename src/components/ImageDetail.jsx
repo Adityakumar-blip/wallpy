@@ -4,10 +4,15 @@ import React from "react";
 const ImageDetail = () => {
   const router = useRouter();
 
-  const { url } = router.query;
+  const { data } = router.query;
+
+  const imgData = JSON.parse(data ?? "");
   return (
     <div className="p-4">
-      <img src={url} className="h-full object-cover rounded-lg" />
+      <img
+        src={imgData?.urls?.regular}
+        className="h-full object-cover rounded-lg"
+      />
     </div>
   );
 };
