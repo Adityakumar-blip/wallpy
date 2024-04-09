@@ -22,3 +22,8 @@ export const AllImages = selector({
     }
   },
 });
+
+export const imgCollection = atom({
+  key: "imgCollection",
+  default: {},
+});

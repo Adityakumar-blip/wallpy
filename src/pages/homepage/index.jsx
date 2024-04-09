@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
-import { AllImages } from "@/Apis/homepage";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { AllImages, imgCollection } from "@/Apis/homepage";
 import ProgressiveImg from "@/components/ProgressiveImage";
 import axios from "axios";
 import { handleImageClick } from "@/utils/functions";
@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 const HomePage = () => {
   //   const images = useRecoilValue(AllImages);
   const [images, setImages] = useState([]);
+  const [imgData, setImgData] = useRecoilState(imgCollection);
 
   useEffect(() => {
     const fetchDataFromAPI = async () => {
@@ -30,13 +31,16 @@ const HomePage = () => {
   return (
     <div>
       {/* <p className="text-xl pl-4 font-bold ">Popular Today</p> */}
-      <div className="flex flex-wrap justify-center">
+      <div className="columns-1 sm:columns-2 lg:columns-4 px-8 pt-[65px]">
         {images.map((image, index) => (
           <ProgressiveImg
             src={image?.urls?.regular}
             placeholderSrc={image?.urls?.thumb}
             key={index}
-            onClick={() => handleImageClick({ router: router, data: image })}
+            onClick={() => {
+              setImgData(image);
+              handleImageClick({ router: router, data: image });
+            }}
           />
         ))}
       </div>

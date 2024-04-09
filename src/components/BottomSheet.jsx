@@ -1,18 +1,18 @@
+import { imgCollection } from "@/Apis/homepage";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { useRecoilState } from "recoil";
 
 const BottomSheet = ({ isOpen, setIsopen }) => {
   const router = useRouter();
 
-  const { data } = router.query;
-
-  const imgData = JSON.parse(data ?? "");
+  const [imgData] = useRecoilState(imgCollection);
 
   const download = () => {
     var element = document.createElement("a");
     var file = new Blob([imgData?.urls.regular], { type: "image/*" });
     element.href = URL.createObjectURL(file);
-    element.download = "image.jpg";
+    element.download = `${imgData?.user?.profile_image?.medium}.jpg`;
     element.click();
   };
 

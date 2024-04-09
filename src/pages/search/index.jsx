@@ -51,7 +51,7 @@ const index = () => {
           onChange={(e) => setValue(e.target.value)}
         />
         <div className="overflow-y-auto max-h-[100vh]">
-          <div className="flex flex-wrap justify-center h-screen items-center">
+          <div className="columns-1 sm:columns-2 lg:columns-4 pt-4">
             {loading ? (
               <span className="loader" />
             ) : (
@@ -61,7 +61,7 @@ const index = () => {
                   onClick={() =>
                     handleImageClick({
                       router: router,
-                      data: image?.urls?.regular,
+                      data: image,
                     })
                   }
                 >

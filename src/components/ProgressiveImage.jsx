@@ -29,7 +29,7 @@ const ProgressiveImg = ({ placeholderSrc, liked, src, ...props }) => {
     setShowMenu(false);
   };
   return (
-    <div className="rounded-lg overflow-hidden shadow-lg m-4 relative w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 ">
+    <div className="rounded-lg overflow-hidden shadow-lg mb-4 relative">
       <img
         {...{ src: imgSrc, ...props }}
         alt={props.alt || ""}

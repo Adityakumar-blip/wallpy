@@ -1,12 +1,15 @@
+import { imgCollection } from "@/Apis/homepage";
 import ProgressiveImg from "@/components/ProgressiveImage";
 import { handleImageClick } from "@/utils/functions";
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 
 const index = () => {
   const router = useRouter();
   const [images, setImages] = useState([]);
+  const [imgData, setImgData] = useRecoilState(imgCollection);
 
   const { id } = router.query;
 
@@ -30,13 +33,14 @@ const index = () => {
   return (
     <div>
       <div>
-        <div className="flex flex-wrap justify-center">
+        <div className="columns-1 sm:columns-2 lg:columns-4 px-4 pt-4">
           {images?.results?.map((image, index) => (
             <div
               className="flex flex-wrap justify-center"
-              onClick={() =>
-                handleImageClick({ router: router, data: image?.urls?.regular })
-              }
+              onClick={() => {
+                setImgData(image);
+                handleImageClick({ router: router, data: image });
+              }}
             >
               <ProgressiveImg
                 src={image?.urls?.regular}

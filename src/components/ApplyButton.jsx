@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 
 import BottomSheet from "./BottomSheet";
+import { useRecoilState } from "recoil";
+import { imgCollection } from "@/Apis/homepage";
 
 const ApplyButton = () => {
   const [open, setOpen] = useState(false);
@@ -10,42 +12,35 @@ const ApplyButton = () => {
     setOpen(!open);
   };
 
-  const router = useRouter();
-
-  const { data } = router.query;
-
-  const imgData = JSON.parse(data ?? "");
-
+  const [imgData] = useRecoilState(imgCollection);
 
   const download = () => {
     if (!imgData || !imgData.urls || !imgData.urls.regular) {
       console.error("Image data is missing or incomplete.");
       return;
     }
-  
+
     const imageUrl = imgData.urls.regular;
-  
+
     fetch(imageUrl)
       .then((response) => response.blob())
       .then((blob) => {
         const url = URL.createObjectURL(blob);
-        
+
         const link = document.createElement("a");
         link.href = url;
-        link.download = "image.jpg";
-  
+        link.download = `${imgData?.alt_description}.jpg`;
+
         document.body.appendChild(link);
         link.click();
-  
+
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
-
       })
       .catch((error) => {
         console.error("Error downloading image:", error);
       });
   };
-  
 
   return (
     <>
@@ -67,7 +62,10 @@ const ApplyButton = () => {
               </svg>
             </p>
           </div>
-          <div className="w-16 h-16 bg-white border border-gray-200 rounded-lg bg-black flex items-center justify-center" onClick={() => download()}>
+          <div
+            className="w-16 h-16 bg-white border border-gray-200 rounded-lg bg-black flex items-center justify-center"
+            onClick={() => download()}
+          >
             <p className="text-xl font-bold text-black">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

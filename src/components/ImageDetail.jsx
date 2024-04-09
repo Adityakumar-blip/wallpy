@@ -1,17 +1,12 @@
 import { useRouter } from "next/router";
 import React from "react";
 
-const ImageDetail = () => {
-  const router = useRouter();
-
-  const { data } = router.query;
-
-  const imgData = data ? JSON.parse(data) : "";
+const ImageDetail = ({ imgData }) => {
   return (
-    <div className="p-4">
+    <div className="p-4 flex items-center jusitfy-center">
       <img
-        src={imgData?.urls?.regular}
-        className="h-full object-cover rounded-lg"
+        src={imgData && imgData?.urls?.regular}
+        className="h-[70vh] object-cover rounded-lg"
       />
     </div>
   );
