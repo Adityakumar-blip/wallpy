@@ -31,7 +31,7 @@ const HomePage = () => {
   return (
     <div>
       {/* <p className="text-xl pl-4 font-bold ">Popular Today</p> */}
-      <div className="columns-1 sm:columns-2 lg:columns-4 px-8 pt-[65px]">
+      <div className="columns-1 sm:columns-2 lg:columns-4 px-4 pt-[65px]">
         {images.map((image, index) => (
           <ProgressiveImg
             src={image?.urls?.regular}

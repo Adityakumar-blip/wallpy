@@ -1,15 +1,18 @@
+import { imgCollection } from "@/Apis/homepage";
 import ProgressiveImg from "@/components/ProgressiveImage";
 import { handleImageClick } from "@/utils/functions";
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
+import { useRecoilState } from "recoil";
 
 const index = () => {
   const router = useRouter();
   const [value, setValue] = useState("");
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [imgData, setImgData] = useRecoilState(imgCollection);
 
   useEffect(() => {
     const fetchDataFromAPI = async () => {
@@ -58,12 +61,10 @@ const index = () => {
               images?.results?.map((image, index) => (
                 <div
                   className="flex flex-wrap justify-center"
-                  onClick={() =>
-                    handleImageClick({
-                      router: router,
-                      data: image,
-                    })
-                  }
+                  onClick={() => {
+                    setImgData(image);
+                    handleImageClick({ router: router, data: image });
+                  }}
                 >
                   <ProgressiveImg
                     src={image?.urls?.regular}
