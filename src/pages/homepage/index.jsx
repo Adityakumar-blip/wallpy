@@ -28,6 +28,8 @@ const HomePage = () => {
 
   const router = useRouter();
 
+  console.log("images", images);
+
   return (
     <div>
       {/* <p className="text-xl pl-4 font-bold ">Popular Today</p> */}

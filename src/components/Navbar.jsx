@@ -4,6 +4,7 @@ import { FaSearch } from "react-icons/fa";
 
 const Navbar = () => {
   const router = useRouter();
+  const pathname = router.pathname;
   return (
     <div className="">
       <nav class="bg-black fixed w-full border-gray-200 ">
@@ -18,9 +19,11 @@ const Navbar = () => {
               Wallpy
             </span>
           </a>
-          <button onClick={() => router.push("/search")}>
-            <FaSearch size={20} />
-          </button>
+          {pathname !== "/upload-detail" && (
+            <button onClick={() => router.push("/search")}>
+              <FaSearch size={20} />
+            </button>
+          )}
         </div>
       </nav>
     </div>

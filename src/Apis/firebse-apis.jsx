@@ -12,8 +12,17 @@ import {
 } from "firebase/firestore";
 import { getAuth, signOut } from "firebase/auth";
 import app from "@/utils/firebase";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytes,
+  uploadBytesResumable,
+} from "firebase/storage";
 
 const auth = getAuth(app);
+const storage = getStorage(app);
+
 const db = getFirestore();
 
 // Function to create user
@@ -107,4 +116,66 @@ const getCollects = async () => {
   }
 };
 
-export { createUser, logout, getUserById, addCollects, getCollects };
+const uploadFileToStorage = async (file, onProgress) => {
+  try {
+    const convertedFile = new Blob([file], { type: file.type });
+    const date = new Date();
+
+    const bucket = ref(storage, `uploads/${date}_${file.name}`);
+    let contentType = file.type;
+
+    const uploadTask = uploadBytesResumable(bucket, convertedFile, contentType);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        onProgress(progress);
+        console.log("Uplaod progress", progress);
+      },
+      (error) => {
+        console.error("Error uploading file:", error);
+        throw error;
+      },
+      () => {
+        console.log("Upload complete!");
+      }
+    );
+
+    await uploadTask;
+
+    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+
+    return downloadURL;
+  } catch (error) {
+    console.error("Error uploading file:", error);
+    throw error;
+  }
+};
+
+const uploadNewImage = async (uploadData) => {
+  try {
+    const collectsRef = doc(db, "uploads", auth.currentUser.uid);
+
+    const imagesCollectionRef = collection(collectsRef, "images");
+    await addDoc(imagesCollectionRef, {
+      ...uploadData,
+      user: auth.currentUser.uid,
+    });
+
+    console.log("Upload added successfully!");
+  } catch (error) {
+    console.error("Error adding upload:", error);
+  }
+};
+
+export {
+  createUser,
+  logout,
+  getUserById,
+  addCollects,
+  getCollects,
+  uploadFileToStorage,
+  uploadNewImage,
+};

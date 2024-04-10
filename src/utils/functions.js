@@ -7,3 +7,11 @@ export const handleImageClick = ({ data, router }) => {
     }
   } catch (error) {}
 };
+
+export function roundOff(number) {
+  if (typeof number === "number" && !isNaN(number) && number % 1 !== 0) {
+    return Math.round(number);
+  } else {
+    return number;
+  }
+}
