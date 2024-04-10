@@ -5,7 +5,6 @@ const BottomNav = () => {
   const router = useRouter();
   const path = router.pathname;
 
-  console.log("Path name", path);
   return (
     <div>
       <div class="fixed z-50 w-full h-16 max-w-sm -translate-x-1/2 bg-white border border-gray-200 rounded-full bottom-4 left-1/2 dark:bg-gray-700 dark:border-gray-600 margin">

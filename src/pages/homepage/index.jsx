@@ -5,6 +5,7 @@ import ProgressiveImg from "@/components/ProgressiveImage";
 import axios from "axios";
 import { handleImageClick } from "@/utils/functions";
 import { useRouter } from "next/router";
+import { getAllUploads } from "@/Apis/firebse-apis";
 
 const HomePage = () => {
   //   const images = useRecoilValue(AllImages);
@@ -17,7 +18,12 @@ const HomePage = () => {
         const response = await axios.get(
           "https://api.unsplash.com/photos/?page=1&per_page=20&orientation=portrait&client_id=HsYF8p3ImJCStWz7AQwZiixIzGUqmhJhsABYXn5JSdQ"
         );
-        setImages(response.data);
+
+        const firebaseData = await getAllUploads();
+
+        const mergedData = [...firebaseData, ...response.data];
+
+        setImages(mergedData);
       } catch (error) {
         console.log("Error in data", error);
       }
@@ -27,8 +33,6 @@ const HomePage = () => {
   }, []);
 
   const router = useRouter();
-
-  console.log("images", images);
 
   return (
     <div>

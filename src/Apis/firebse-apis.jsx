@@ -170,6 +170,24 @@ const uploadNewImage = async (uploadData) => {
   }
 };
 
+const getAllUploads = async () => {
+  try {
+    const collectsRef = doc(db, "uploads", auth.currentUser.uid);
+    const imagesCollectionRef = collection(collectsRef, "images");
+    const querySnapshot = await getDocs(imagesCollectionRef);
+
+    const uploads = [];
+    querySnapshot.forEach((doc) => {
+      uploads.push({ id: doc.id, ...doc.data() });
+    });
+
+    return uploads;
+  } catch (error) {
+    console.error("Error getting uploads:", error);
+    return [];
+  }
+};
+
 export {
   createUser,
   logout,
@@ -178,4 +196,5 @@ export {
   getCollects,
   uploadFileToStorage,
   uploadNewImage,
+  getAllUploads,
 };

@@ -28,7 +28,9 @@ const UploadDetail = () => {
         created_at: new Date(),
       };
       console.log("heree");
-      uploadNewImage(imgData);
+      uploadNewImage(imgData).then(() => {
+        router.push("/homepage");
+      });
     } catch (error) {
       console.log("upload error", error);
     }
