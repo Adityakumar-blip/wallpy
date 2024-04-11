@@ -9,6 +9,7 @@ import {
   doc,
   Firestore,
   setDoc,
+  collectionGroup,
 } from "firebase/firestore";
 import { getAuth, signOut } from "firebase/auth";
 import app from "@/utils/firebase";
@@ -172,8 +173,8 @@ const uploadNewImage = async (uploadData) => {
 
 const getAllUploads = async () => {
   try {
-    const collectsRef = doc(db, "uploads", auth.currentUser.uid);
-    const imagesCollectionRef = collection(collectsRef, "images");
+    const imagesCollectionRef = collectionGroup(db, "images");
+
     const querySnapshot = await getDocs(imagesCollectionRef);
 
     const uploads = [];

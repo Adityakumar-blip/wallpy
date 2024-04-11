@@ -1,14 +1,15 @@
 "use client";
-import { addCollects } from "@/Apis/firebse-apis";
+import { addCollects, getCollects } from "@/Apis/firebse-apis";
 import app from "@/utils/firebase";
 import { getAuth } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 
-const ProgressiveImg = ({ placeholderSrc, liked, src, ...props }) => {
+const ProgressiveImg = ({ placeholderSrc, src, ...props }) => {
   const auth = getAuth(app);
   const user = auth.currentUser;
   const [imgSrc, setImgSrc] = useState(placeholderSrc || src);
   const [showMenu, setShowMenu] = useState(false);
+  const [liked, setLiked] = useState([]);
   const customClass =
     placeholderSrc && imgSrc === placeholderSrc ? "loading" : "loaded";
 
@@ -27,6 +28,22 @@ const ProgressiveImg = ({ placeholderSrc, liked, src, ...props }) => {
 
   const hideMenu = () => {
     setShowMenu(false);
+  };
+
+  const fetchData = async () => {
+    const fetchCollects = await getCollects();
+
+    setLiked(fetchCollects ? fetchCollects : []);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleAddCollects = () => {
+    addCollects(user.uid, src).then(() => {
+      fetchData();
+    });
   };
   return (
     <div className="rounded-lg overflow-hidden shadow-lg mb-4 relative">
@@ -48,7 +65,7 @@ const ProgressiveImg = ({ placeholderSrc, liked, src, ...props }) => {
         </div>
       )}
       <div className="absolute top-0 right-0 p-2">
-        {liked ? (
+        {liked.includes(src) ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -60,7 +77,7 @@ const ProgressiveImg = ({ placeholderSrc, liked, src, ...props }) => {
             <path d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z" />
           </svg>
         ) : (
-          <div onClick={() => addCollects(user.uid, src)}>
+          <div onClick={() => handleAddCollects()}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
