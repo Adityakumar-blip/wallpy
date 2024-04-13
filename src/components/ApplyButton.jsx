@@ -63,96 +63,77 @@ const ApplyButton = () => {
 
   const setHomeScreenImage = () => {
     const imageUrl = imgData.urls.regular;
-    console.log("herr");
+    console.log("Setting home screen image with URL:", imageUrl);
 
-    navigator.serviceWorker.ready.then((registration) => {
-      console.log("Registration", registration);
-      registration.active.postMessage({ type: "set-wallpaper", url: imageUrl });
+    if (navigator.serviceWorker.controller) {
+      console.log("Service worker is controlling the page");
+      navigator.serviceWorker.controller.postMessage({
+        type: "set-wallpaper",
+        url: imageUrl,
+      });
+    } else {
+      console.log("Service worker is not controlling the page");
+      navigator.serviceWorker
+        .register("/service-worker.js")
+        .then((registration) => {
+          console.log(
+            "Service worker registered with scope:",
+            registration.scope
+          );
+          registration.active.postMessage({
+            type: "set-wallpaper",
+            url: imageUrl,
+          });
+        });
+    }
+
+    console.log("Self:", window.self);
+
+    window.window.self.addEventListener("message", (event) => {
+      console.log("Received message event:", event);
+      if (event.data.type === "set-wallpaper") {
+        const imageUrl = event.data.url;
+        event.waitUntil(
+          fetch(event.data.url)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(`Error fetching image: ${response.statusText}`);
+              }
+              return response.blob();
+            })
+            .then((blob) => {
+              const url = URL.createObjectURL(blob);
+              const eventInit = {
+                method: "GET",
+                headers: { "Content-Type": "image/jpeg" },
+              };
+              const request = new Request(url, eventInit);
+              return window.self.registration.showNotification(
+                "Set Wallpaper",
+                {
+                  body: "Setting wallpaper...",
+                  icon: url,
+                }
+              );
+            })
+            .then(() => {
+              const request = new Request("/set-wallpaper", eventInit);
+              return window.self.registration.active.postMessage(
+                { type: "set-wallpaper", url: imageUrl },
+                [request]
+              );
+            })
+            .catch((error) => {
+              console.error(error);
+              return window.self.registration.showNotification("Error", {
+                body: error.message,
+                icon: "/icon.png",
+              });
+            })
+        );
+      }
     });
   };
-
-  self.addEventListener("message", (event) => {
-    console.log("Event ", event);
-    if (event.data.type === "set-wallpaper") {
-      const imageUrl = event.data.url;
-      event.waitUntil(
-        fetch(event.data.url)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`Error fetching image: ${response.statusText}`);
-            }
-            return response.blob();
-          })
-          .then((blob) => {
-            const url = URL.createObjectURL(blob);
-            const eventInit = {
-              method: "GET",
-              headers: { "Content-Type": "image/jpeg" },
-            };
-            const request = new Request(url, eventInit);
-            return self.registration.showNotification("Set Wallpaper", {
-              body: "Setting wallpaper...",
-              icon: url,
-            });
-          })
-          .then(() => {
-            const request = new Request("/set-wallpaper", eventInit);
-            return self.registration.active.postMessage(
-              { type: "set-wallpaper", url: imageUrl },
-              [request]
-            );
-          })
-          .catch((error) => {
-            console.error(error);
-            return self.registration.showNotification("Error", {
-              body: error.message,
-              icon: "/icon.png",
-            });
-          })
-      );
-    }
-  });
-
-  self.addEventListener("message", (event) => {
-    if (event.data.type === "set-wallpaper") {
-      const imageUrl = event.data.url;
-      event.waitUntil(
-        fetch(event.data.url)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`Error fetching image: ${response.statusText}`);
-            }
-            return response.blob();
-          })
-          .then((blob) => {
-            const url = URL.createObjectURL(blob);
-            const eventInit = {
-              method: "GET",
-              headers: { "Content-Type": "image/jpeg" },
-            };
-            const request = new Request(url, eventInit);
-            return self.registration.showNotification("Set Wallpaper", {
-              body: "Setting wallpaper...",
-              icon: url,
-            });
-          })
-          .then(() => {
-            const request = new Request("/set-wallpaper", eventInit);
-            return self.registration.active.postMessage(
-              { type: "set-wallpaper", url: imageUrl },
-              [request]
-            );
-          })
-          .catch((error) => {
-            console.error(error);
-            return self.registration.showNotification("Error", {
-              body: error.message,
-              icon: "/icon.png",
-            });
-          })
-      );
-    }
-  });
 
   return (
     <>
