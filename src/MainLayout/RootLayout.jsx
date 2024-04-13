@@ -4,6 +4,9 @@
 import { useEffect, useState } from "react";
 import MainLayout from "./MainLayout";
 import AuthLayout from "./AuthLayout";
+import { useRecoilState } from "recoil";
+import { userCollects } from "@/Apis/homepage";
+import { getCollects } from "@/Apis/firebse-apis";
 // import { CircularProgress } from "@mui/material";
 
 const RootLayout = ({ children, router }) => {
@@ -23,11 +26,11 @@ const RootLayout = ({ children, router }) => {
         }
       } else if (path === "/") {
         setLoading(true);
-        router.push("/");
+        router.push("/homepage");
       } else {
         if (path.startsWith("/auth")) {
           setLoading(true);
-          router.push("/");
+          router.push("/homepage");
         }
       }
     }

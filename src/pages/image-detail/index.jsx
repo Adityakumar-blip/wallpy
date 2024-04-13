@@ -8,6 +8,8 @@ const Index = () => {
   const router = useRouter();
   const [imgData] = useRecoilState(imgCollection);
 
+  console.log("Image detaail", imgData);
+
   return (
     <div className="flex items-center justify-center">
       {imgData ? (

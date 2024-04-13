@@ -1,9 +1,12 @@
+import { imgCollection } from "@/Apis/homepage";
 import { handleImageClick } from "@/utils/functions";
 import { useRouter } from "next/router";
 import React from "react";
+import { useRecoilState } from "recoil";
 
 const CategorySlide = ({ categories }) => {
   const router = useRouter();
+  const [imgData, setImgData] = useRecoilState(imgCollection);
 
   const handleCategorySelection = (category) => {
     router.push({
@@ -23,7 +26,7 @@ const CategorySlide = ({ categories }) => {
                   src={category.img}
                   alt={category.name}
                   onClick={() => handleCategorySelection(category.name)}
-                  className="mb-2 min-w-[100px] h-[100px] rounded-lg"
+                  className="mb-2 min-w-[100px] h-[100px] rounded-lg object-cover"
                 />
                 <div className="text-center">{category.name}</div>{" "}
               </div>
@@ -31,10 +34,11 @@ const CategorySlide = ({ categories }) => {
               <img
                 src={category}
                 alt={category.name}
-                onClick={() =>
-                  handleImageClick({ router: router, data: category })
-                }
-                className="mb-2 min-w-[100px] h-[100px] rounded-lg"
+                onClick={() => {
+                  setImgData(category);
+                  handleImageClick({ router: router, data: category });
+                }}
+                className="mb-2 min-w-[100px] h-[100px] rounded-lg object-cover"
               />
             )}
           </div>

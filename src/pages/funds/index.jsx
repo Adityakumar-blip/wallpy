@@ -1,9 +1,14 @@
 import { getCollects } from "@/Apis/firebse-apis";
+import { userCollects } from "@/Apis/homepage";
 import CategorySlide from "@/components/CategorySlide";
 import React, { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 
 const Funds = () => {
   const [liked, setLiked] = useState([]);
+  const [userCollectsres, setCollects] = useRecoilState(userCollects);
+
+  console.log("User Collections", userCollectsres);
   const array = [
     {
       id: 0,
@@ -91,12 +96,14 @@ const Funds = () => {
   ];
 
   useEffect(() => {
-    const fetchData = async () => {
-      const fetchCollects = await getCollects();
-      console.log(fetchCollects);
-      setLiked(fetchCollects);
-    };
-    fetchData();
+    if (liked.length === 0) {
+      const fetchData = async () => {
+        const fetchCollects = await getCollects();
+
+        setLiked(fetchCollects);
+      };
+      fetchData();
+    }
   }, []);
   return (
     <div className="bg-black h-screen flex flex-col pl-4 pr-4 gap-6">

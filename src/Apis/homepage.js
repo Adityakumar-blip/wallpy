@@ -27,3 +27,8 @@ export const imgCollection = atom({
   key: "imgCollection",
   default: {},
 });
+
+export const userCollects = atom({
+  key: "userCollects",
+  default: [],
+});

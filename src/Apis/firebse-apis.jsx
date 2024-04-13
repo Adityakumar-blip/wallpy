@@ -107,7 +107,7 @@ const getCollects = async () => {
 
     if (collectsSnapshot.exists()) {
       const { images } = collectsSnapshot.data();
-      console.log("images", images);
+
       return images;
     } else {
       return [];
@@ -155,6 +155,7 @@ const uploadFileToStorage = async (file, onProgress) => {
   }
 };
 
+// function to upload new image
 const uploadNewImage = async (uploadData) => {
   try {
     const collectsRef = doc(db, "uploads", auth.currentUser.uid);
@@ -171,10 +172,30 @@ const uploadNewImage = async (uploadData) => {
   }
 };
 
+// function to get all the uploads irerspective of any user
 const getAllUploads = async () => {
   try {
     const imagesCollectionRef = collectionGroup(db, "images");
 
+    const querySnapshot = await getDocs(imagesCollectionRef);
+
+    const uploads = [];
+    querySnapshot.forEach((doc) => {
+      uploads.push({ id: doc.id, ...doc.data() });
+    });
+
+    return uploads;
+  } catch (error) {
+    console.error("Error getting uploads:", error);
+    return [];
+  }
+};
+
+// function to get all the uploads by a logged in user
+const getUserUploads = async () => {
+  try {
+    const collectsRef = doc(db, "uploads", auth.currentUser.uid);
+    const imagesCollectionRef = collection(collectsRef, "images");
     const querySnapshot = await getDocs(imagesCollectionRef);
 
     const uploads = [];
@@ -198,4 +219,5 @@ export {
   uploadFileToStorage,
   uploadNewImage,
   getAllUploads,
+  getUserUploads,
 };

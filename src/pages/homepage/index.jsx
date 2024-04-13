@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { AllImages, imgCollection } from "@/Apis/homepage";
+import { AllImages, imgCollection, userCollects } from "@/Apis/homepage";
 import ProgressiveImg from "@/components/ProgressiveImage";
 import axios from "axios";
 import { handleImageClick } from "@/utils/functions";
 import { useRouter } from "next/router";
-import { getAllUploads } from "@/Apis/firebse-apis";
+import { getAllUploads, getCollects } from "@/Apis/firebse-apis";
 
 const HomePage = () => {
   //   const images = useRecoilValue(AllImages);
   const [images, setImages] = useState([]);
   const [imgData, setImgData] = useRecoilState(imgCollection);
+  const [collects, setCollects] = useRecoilState(userCollects);
 
   useEffect(() => {
     const fetchDataFromAPI = async () => {
@@ -33,6 +34,15 @@ const HomePage = () => {
   }, []);
 
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchCollects = await getCollects();
+      console.log("fetchCollects", fetchCollects);
+      setCollects(fetchCollects);
+    };
+    fetchData();
+  }, []);
 
   return (
     <div>
