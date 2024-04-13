@@ -42,15 +42,36 @@ const ApplyButton = () => {
       });
   };
 
+  async function handleSetWallpaper(imageUrl) {
+    if ("WallpaperManager" in window) {
+      const wallpaperManager = window.WallpaperManager;
+      try {
+        await wallpaperManager.setWallpaper(imageUrl);
+        return new Response("Wallpaper set successfully!");
+      } catch (error) {
+        return new Response("Error setting wallpaper: " + error.message, {
+          status: 500,
+        });
+      }
+    } else {
+      return new Response(
+        "WallpaperManager API is not supported in this browser.",
+        { status: 500 }
+      );
+    }
+  }
+
   const setHomeScreenImage = () => {
-    // Replace 'path_to_your_image' with the actual path to your image
-    // const imagePath = '/path_to_your_image/image.jpg';
     const imageUrl = imgData.urls.regular;
-    
-    const googlePhotosUrl = `https://photos.google.com/share/AF1QipPdW1mBa6A1L1Cnun9Pz1KizXx3AgYxUaAq7kmz2bS91M6aQfVYKjVcOUIKk5qXCg/photo/${imageUrl}`;
-    
-    // Open the URL in a new tab/window
-    window.open(googlePhotosUrl, '_blank');
+
+    self.addEventListener("fetch", (event) => {
+      if (
+        event.request.method === "GET" &&
+        event.request.url.endsWith("/set-wallpaper")
+      ) {
+        event.respondWith(handleSetWallpaper(imageUrl));
+      }
+    });
   };
 
   return (
@@ -88,7 +109,10 @@ const ApplyButton = () => {
               </svg>
             </p>
           </div>
-          <div className="w-16 h-16 bg-white border border-gray-200 rounded-lg bg-black flex items-center justify-center" onClick={() => setHomeScreenImage()}>
+          <div
+            className="w-16 h-16 bg-white border border-gray-200 rounded-lg bg-black flex items-center justify-center"
+            onClick={() => setHomeScreenImage()}
+          >
             <p className="text-xl font-bold text-black">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
