@@ -14,12 +14,11 @@ const Navbar = () => {
               Wallpy
             </span>
           </a>
-          {pathname !== "/upload-detail" ||
-            (pathname !== "/profile" && (
-              <button onClick={() => router.push("/search")}>
-                <FaSearch size={20} />
-              </button>
-            ))}
+          {pathname !== "/upload-detail" && pathname !== "/profile" && (
+            <button onClick={() => router.push("/search")}>
+              <FaSearch size={20} />
+            </button>
+          )}
         </div>
       </nav>
     </div>

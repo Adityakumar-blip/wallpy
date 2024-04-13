@@ -42,6 +42,17 @@ const ApplyButton = () => {
       });
   };
 
+  const setHomeScreenImage = () => {
+    // Replace 'path_to_your_image' with the actual path to your image
+    // const imagePath = '/path_to_your_image/image.jpg';
+    const imageUrl = imgData.urls.regular;
+    
+    const googlePhotosUrl = `https://photos.google.com/share/AF1QipPdW1mBa6A1L1Cnun9Pz1KizXx3AgYxUaAq7kmz2bS91M6aQfVYKjVcOUIKk5qXCg/photo/${imageUrl}`;
+    
+    // Open the URL in a new tab/window
+    window.open(googlePhotosUrl, '_blank');
+  };
+
   return (
     <>
       <BottomSheet isOpen={open} setIsopen={setOpen} />
@@ -77,7 +88,7 @@ const ApplyButton = () => {
               </svg>
             </p>
           </div>
-          <div className="w-16 h-16 bg-white border border-gray-200 rounded-lg bg-black flex items-center justify-center">
+          <div className="w-16 h-16 bg-white border border-gray-200 rounded-lg bg-black flex items-center justify-center" onClick={() => setHomeScreenImage()}>
             <p className="text-xl font-bold text-black">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

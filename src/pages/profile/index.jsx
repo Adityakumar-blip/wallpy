@@ -29,29 +29,24 @@ const index = () => {
     fetchData();
   }, []);
 
-  // Function to share the PWA
   const sharePWA = async () => {
     try {
       if (window.navigator.share) {
-        // If Web Share API is supported
         await window.navigator.share({
           title: "Your PWA Title",
           text: "Check out this awesome PWA!",
           url: "https://wallpy-app.vercel.app/",
         });
       } else {
-        // Fallback for browsers that do not support Web Share API
         const shareData = {
           title: "Your PWA Title",
           text: "Check out this awesome PWA!",
           url: "https://wallpy-app.vercel.app/",
         };
 
-        // If the share menu is available, open it
         if (window.navigator.share) {
           await window.navigator.share(shareData);
         } else {
-          // Fallback behavior if sharing is not supported
           alert("Sharing is not supported on this browser.");
         }
       }
