@@ -20,6 +20,7 @@ const index = () => {
   }, []);
   return (
     <div>
+      <p className="p-4 text-xl font-bold">My Collection</p>
       <div className="columns-1 text-white sm:columns-2 lg:columns-4 px-4 pt-[65px]">
         {collects?.length > 0
           ? collects?.map((image, index) => (
