@@ -91,7 +91,13 @@ const UploadDetail = () => {
           </label>
         </div>
 
-        <div>
+        <div className="flex gap-2">
+          <button
+            onClick={() => router.back()}
+            className="flex items-center justify-center mt-4 bg-white px-4 h-[4rem] rounded-lg text-black text-2xl font-bold"
+          >
+            Cancel
+          </button>
           <button
             type="button"
             class="text-center mt-4 bg-white w-full h-[4rem] rounded-lg text-black text-2xl font-bold"

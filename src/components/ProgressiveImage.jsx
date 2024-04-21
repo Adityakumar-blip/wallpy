@@ -17,6 +17,7 @@ const ProgressiveImg = ({ placeholderSrc, src, ...props }) => {
     const img = new Image();
     img.src = src;
     img.onload = () => {
+      6;
       setImgSrc(src);
     };
   }, [src]);
@@ -53,6 +54,7 @@ const ProgressiveImg = ({ placeholderSrc, src, ...props }) => {
         className={`image ${customClass}`}
         onClick={props.onClick}
       />
+      <p className="">{props?.title}</p>
       {showMenu && (
         <div
           className="absolute top-0 right-0 p-2 bg-white border border-gray-200 rounded shadow"

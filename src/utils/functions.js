@@ -15,3 +15,23 @@ export function roundOff(number) {
     return number;
   }
 }
+
+export function detectDeviceType() {
+  const userAgent = navigator.userAgent;
+
+  if (/Android/i.test(userAgent)) {
+    return "Android";
+  } else if (/iPhone|iPad|iPod/i.test(userAgent)) {
+    return "iOS";
+  } else if (/Windows Phone/i.test(userAgent)) {
+    return "Windows Phone";
+  } else if (/Macintosh/i.test(userAgent)) {
+    return "Mac";
+  } else if (/Windows NT/i.test(userAgent)) {
+    return "Windows";
+  } else if (/Linux/i.test(userAgent)) {
+    return "Linux";
+  } else {
+    return "Unknown";
+  }
+}

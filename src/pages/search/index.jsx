@@ -1,6 +1,6 @@
 import { imgCollection } from "@/Apis/homepage";
 import ProgressiveImg from "@/components/ProgressiveImage";
-import { handleImageClick } from "@/utils/functions";
+import { detectDeviceType, handleImageClick } from "@/utils/functions";
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -18,8 +18,13 @@ const index = () => {
     const fetchDataFromAPI = async () => {
       setLoading(true);
       try {
+        const deviceType = detectDeviceType();
         const response = await axios.get(
-          `https://api.unsplash.com/search/photos?query=${value}&page=1&orientation=portrait&per_page=20&client_id=HsYF8p3ImJCStWz7AQwZiixIzGUqmhJhsABYXn5JSdQ`
+          `https://api.unsplash.com/search/photos?query=${value}&page=1&orientation=${
+            deviceType === "Windows" || deviceType === "Mac"
+              ? "landscape"
+              : "portrait"
+          }&per_page=20&client_id=HsYF8p3ImJCStWz7AQwZiixIzGUqmhJhsABYXn5JSdQ`
         );
         console.log("response", response);
         setImages(response.data);

@@ -137,7 +137,7 @@ const ApplyButton = () => {
 
   return (
     <>
-      <BottomSheet isOpen={open} setIsopen={setOpen} />
+      <BottomSheet isOpen={open} setIsopen={setOpen} filter={true} />
       <div className="flex justify-center items-center h-screen">
         <div className="flex space-x-4">
           <div
