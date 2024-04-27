@@ -28,7 +28,11 @@ const index = () => {
 
     fetchDataFromAPI();
   }, [id]);
-  return <div>{id}</div>;
+  return (
+    <div>
+      <p>Why are you in so hurry to click </p>
+    </div>
+  );
 };
 
 export default index;

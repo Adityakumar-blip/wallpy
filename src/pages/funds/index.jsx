@@ -106,7 +106,7 @@ const Funds = () => {
     }
   }, []);
   return (
-    <div className="bg-black h-screen flex flex-col pl-4 pr-4 gap-6">
+    <div className=" h-screen flex flex-col pl-4 pr-4 gap-6">
       <div>
         <p className="text-xl font-bold ">Liked</p>
         <CategorySlide categories={liked} />

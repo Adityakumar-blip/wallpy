@@ -14,9 +14,11 @@ const HomePage = () => {
   const [images, setImages] = useState([]);
   const [imgData, setImgData] = useRecoilState(imgCollection);
   const [collects, setCollects] = useRecoilState(userCollects);
+  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     const deviceType = detectDeviceType();
     console.log("deviceType", deviceType);
     const fetchDataFromAPI = async () => {
@@ -36,6 +38,8 @@ const HomePage = () => {
         setImages(mergedData);
       } catch (error) {
         console.log("Error in data", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -54,31 +58,39 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div>
-      <BottomSheet isOpen={open} setIsopen={setOpen} />
+    <>
+      <div>
+        <BottomSheet isOpen={open} setIsopen={setOpen} />
 
-      <div className="flex items-center justify-between pr-4">
-        <p className="text-xl pl-4 font-bold ">Popular Today</p>
-        {/* <div className="flex items-center gap-2 border border-white-500 px-2">
+        <div className="flex items-center justify-between pr-4">
+          <p className="text-xl pl-4 font-bold ">Popular Today</p>
+          {/* <div className="flex items-center gap-2 border border-white-500 px-2">
           <div>1</div>
           <div>2</div>
         </div> */}
-      </div>
+        </div>
 
-      <div className="columns-2 sm:columns-2 lg:columns-4 px-4 pt-[65px]">
-        {images.map((image, index) => (
-          <ProgressiveImg
-            src={image?.urls?.regular}
-            placeholderSrc={image?.urls?.thumb}
-            key={index}
-            onClick={() => {
-              setImgData(image);
-              handleImageClick({ router: router, data: image });
-            }}
-          />
-        ))}
+        {loading ? (
+          <div className="flex h-[90vh] items-center justify-center">
+            <span class="loader"></span>
+          </div>
+        ) : (
+          <div className="columns-2 sm:columns-2 lg:columns-4 px-4 pt-[65px]">
+            {images.map((image, index) => (
+              <ProgressiveImg
+                src={image?.urls?.regular}
+                placeholderSrc={image?.urls?.thumb}
+                key={index}
+                onClick={() => {
+                  setImgData(image);
+                  handleImageClick({ router: router, data: image });
+                }}
+              />
+            ))}
+          </div>
+        )}
       </div>
-    </div>
+    </>
   );
 };
 

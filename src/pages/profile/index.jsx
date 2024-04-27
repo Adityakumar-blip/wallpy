@@ -85,10 +85,12 @@ const index = () => {
       </div>
 
       <div className="flex flex-col gap-4 mt-4">
-        <p className="text-2xl text-gray-400 font-bold">Settings</p>
+        <p className="text-2xl text-black dark:text-gray-400 font-bold">
+          Settings
+        </p>
         <div className="flex flex-col gap-4">
           <div
-            className="flex items-center justify-between border border-cyan-50 p-4 rounded-lg"
+            className="flex items-center justify-between border border-black dark:border-cyan-50 p-4 rounded-lg"
             onClick={() => router.push("/my-uploads")}
           >
             <p className="text-xl font-semibold">My Uploads</p>
@@ -97,7 +99,7 @@ const index = () => {
             </div>
           </div>
           <div
-            className="flex items-center justify-between border border-cyan-50 p-4 rounded-lg"
+            className="flex items-center justify-between border border-black dark:border-cyan-50 p-4 rounded-lg"
             onClick={() => router.push("/my-collects")}
           >
             <p className="text-xl font-semibold">Collects</p>
@@ -106,7 +108,7 @@ const index = () => {
             </div>
           </div>
           <div
-            className="flex items-center justify-between border border-cyan-50 p-4 rounded-lg"
+            className="flex items-center justify-between border border-black dark:border-cyan-50 p-4 rounded-lg"
             onClick={() => sharePWA()}
           >
             <p className="text-xl font-semibold">Invite Friends</p>
